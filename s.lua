@@ -693,6 +693,15 @@ function UILibrary:Window(Table)
 					Size = UDim2.new(0.063, 0,0.65, 0),
 					Text = "",
 				})
+				local button2 = lib.Create("TextButton", buttonFrame, {
+					AutoButtonColor = false,
+					BackgroundColor3 = Color3.fromRGB(44, 44, 44), 
+					BackgroundTransparency = 1, 
+					BorderSizePixel = 0, 
+					Position = UDim2.new(0, 0,0, 0), 
+					Size = UDim2.new(1, 0,1, 0),
+					Text = "",
+				})
 				local button_corner = lib.Create("UICorner", button, {
 					CornerRadius = UDim.new(0, 5)
 				})
@@ -745,6 +754,9 @@ function UILibrary:Window(Table)
 					end
 				end
 				button.Activated:Connect(function()
+					onActivate()
+				end)
+				button2.Activated:Connect(function()
 					onActivate()
 				end)
 				local setLib = {}
@@ -1253,17 +1265,7 @@ function UILibrary:Window(Table)
 					Position = UDim2.new(0, 0,0, 0), 
 					Size = UDim2.new(1, 0,0.115, 0),
 				})
-				local Button_highlight = lib.Create("Frame", buttonFrame, {
-					ZIndex = 2,
-					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-					BackgroundTransparency = 1,
-					BorderSizePixel = 0,
-					Size = UDim2.new(1, 0,1, 0),
-					Visible = false,
-				})
-				local Buttonhighlight_corner = lib.Create("UICorner", Button_highlight, {
-					CornerRadius = UDim.new(0, 5)
-				})
+				
 				local buttonFrame_corner = lib.Create("UICorner", buttonFrame, {
 					CornerRadius = UDim.new(0, 5)
 				})
@@ -1280,6 +1282,17 @@ function UILibrary:Window(Table)
 					Position = UDim2.new(0, 0,0, 0), 
 					Size = UDim2.new(1, 0,1, 0), -- offset
 					Name = "1"
+				})
+				local Button_highlight = lib.Create("Frame", topFrame, {
+					ZIndex = 2,
+					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+					BackgroundTransparency = 1,
+					BorderSizePixel = 0,
+					Size = UDim2.new(1, 0,1, 0),
+					--Visible = false,
+				})
+				local Buttonhighlight_corner = lib.Create("UICorner", Button_highlight, {
+					CornerRadius = UDim.new(0, 5)
 				})
 				local topFrame_corner = lib.Create("UICorner", topFrame, {
 					CornerRadius = UDim.new(0, 5)
@@ -1347,6 +1360,7 @@ function UILibrary:Window(Table)
 					AnchorPoint = Vector2.new(0.5, 0.5),
 					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 					BorderSizePixel = 0,
+					BackgroundTransparency = 0.75,
 					Position = UDim2.new(0.5, 0,0, 0), 
 					Size = UDim2.new(1.15, 0,0, 2),
 				})
@@ -1386,16 +1400,25 @@ function UILibrary:Window(Table)
 				local bottomFrameNewSize = bottomFrame.AbsoluteSize.Y
 				bottomFrame.Size = UDim2.new(1,0,0,0)
 				
+				topFrame.MouseEnter:Connect(function()
+					lib.Tween(Button_highlight, "BackgroundTransparency", 0.95, "InOut", "Linear", 0.1)
+				end)
+				topFrame.MouseLeave:Connect(function()
+					lib.Tween(Button_highlight, "BackgroundTransparency", 1, "InOut", "Linear", 0.1)
+				end)
+				
 				local tempTog = false
 				active.MouseButton1Down:Connect(function()
 					if not tempTog then
 						lib.Tween(bottomFrame, "Size", UDim2.new(1,0,0, bottomFrameNewSize), "InOut", "Quad")
 						bottomFrame.Visible = true
+						Button_highlight.Visible = false
 						tempTog = true
 					else
 						lib.Tween(bottomFrame, "Size", UDim2.new(1,0,0, 0), "InOut", "Quad")
 						wait(0.1)
 						bottomFrame.Visible = false
+						Button_highlight.Visible = true
 						tempTog = false
 					end
 				end)
