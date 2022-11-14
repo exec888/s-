@@ -1,7 +1,7 @@
 local UILibrary = {}
 
 
-local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
@@ -47,7 +47,12 @@ function UILibrary:Window(Table)
 	end
 
 	Sys('<font color="rgb(85, 170, 127)">Loading..</font>', "["..cache.HubName.."] "  .. cache.ScriptName .. " by " .. cache.Creator, 60)
-
+	function UILibrary:Destroy()
+		screenGui:Destroy()
+		if Table.OnClose then
+			return Table.OnClose()
+		end
+	end
 	local mainFrame = lib.Create("Frame", screenGui, {
 		AnchorPoint = Vector2.new(0.5, 0.5);
 		BackgroundColor3 = Color3.fromRGB(34, 34, 34), 
@@ -1652,9 +1657,6 @@ function UILibrary:Get(str)
 		toReturn = Keys[str].Value
 	end
 	return toReturn
-end
-function UILibrary:Destroy()
-	screenGui:Destroy()
 end
 
 return UILibrary
