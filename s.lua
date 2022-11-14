@@ -89,15 +89,15 @@ function UILibrary:Window(Table)
 		ScaleType = Enum.ScaleType.Fit;
 		Image = Table.Icon or lib.Headshot(Players.LocalPlayer.UserId)
 	})
-	local closeButton = lib.Create("TextButton", topBar, {
+	local closeButton = lib.Create("ImageButton", topBar, {
 		AutoButtonColor = false,
+		AnchorPoint = Vector2.new(0, 0.5),
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0.925, 0,0, 0), 
-		Size = UDim2.new(0.075, 0,1, 0),
-		Font = "Code",
-		TextColor3 = Color3.fromRGB(150, 150, 150), 
-		Text = "-",
-		TextScaled = true,
+		Position = UDim2.new(0.955, 0,0.5, 0), 
+		Size = UDim2.new(0.032, 0,0.75, 0),
+		ScaleType = "Fit",
+		Image = "rbxassetid://7743878857",
+		ImageColor3 = Color3.fromRGB(200,200,200)
 	})
 	local scriptName = lib.Create("TextButton", topBar, {
 		AutoButtonColor = false,
@@ -217,29 +217,19 @@ function UILibrary:Window(Table)
 	})
 
 	iconButton.MouseEnter:Connect(function()
-		lib.Tween(scriptName, "TextTransparency", 0, "InOut", "Linear", 0.1)
+		lib.Tween(scriptName, "TextTransparency", 0)
 	end)
 	iconButton.MouseLeave:Connect(function()
-		lib.Tween(scriptName, "TextTransparency", 1, "InOut", "Linear", 0.1)
+		lib.Tween(scriptName, "TextTransparency", 1)
 	end)
 	closeButton.MouseEnter:Connect(function()
-		lib.Tween(closeButton, "TextColor3", Color3.fromRGB(200,200,200), "InOut", "Linear", 0.1)
+		lib.Tween(closeButton, "ImageColor3", Color3.fromRGB(255,255,255))
 	end)
 	closeButton.MouseLeave:Connect(function()
-		lib.Tween(closeButton, "TextColor3", Color3.fromRGB(150,150,150), "InOut", "Linear", 0.1)
+		lib.Tween(closeButton, "ImageColor3", Color3.fromRGB(200,200,200))
 	end)
-	local maintoggle = false
-	closeButton.MouseButton1Down:Connect(function()
-		if maintoggle then
-			lib.Tween(mainFrame, "Position", UDim2.new(0.5, 0,1.15, 0), "InOut", "Linear", 0.1)
-			closeButton.Text = "+"
-			maintoggle = false
-		else
-			lib.Tween(mainFrame, "Position", UDim2.new(0.5, 0,0.5, 0), "InOut", "Linear", 0.1)
-			closeButton.Text = "-"
-			maintoggle = true
-		end
-
+	closeButton.MouseButton1Up:Connect(function()
+		UILibrary:Destroy()
 	end)
 
 	UserInputService.InputBegan:Connect(function(input, gpe)
@@ -625,6 +615,9 @@ function UILibrary:Window(Table)
 				button.MouseLeave:Connect(function()
 					lib.Tween(Button_highlight, "BackgroundTransparency", 1, "InOut", "Linear", 0.1)
 				end)
+				button.MouseButton1Down:Connect(function()
+					box:CaptureFocus()
+				end)
 				box.FocusLost:Connect(function(enterPressed, inputThatCausedFocusLost)
 					if not enterPressed then return end
 					local success, err = pcall(function()
@@ -987,7 +980,7 @@ function UILibrary:Window(Table)
 					Position = UDim2.new(0.1, 0,0.1, 0), 
 					Size = UDim2.new(0.8, 0,0.8, 0),
 					ScaleType = Enum.ScaleType.Fit;
-					Image = "rbxassetid://11113708488",
+					Image = "rbxassetid://11563616615",
 					ZIndex = 2
 				})
 				local optionsFrame = lib.Create("Frame", buttonFrame, {
@@ -1052,7 +1045,7 @@ function UILibrary:Window(Table)
 				local function onActivate(v)
 					optionsFrame.Visible = false
 					show = false
-					imagebutton.Image = "rbxassetid://11113708488"
+					lib.Tween(imagebutton, "Rotation", 0)
 					local success, err = pcall(function()
 						if typeof(v) == "Instance" then
 							v = v.Name
@@ -1084,11 +1077,11 @@ function UILibrary:Window(Table)
 
 				local function toggleOpt()
 					if (show) then
-						imagebutton.Image = "rbxassetid://11113708488"
+						lib.Tween(imagebutton, "Rotation", 0)
 						optionsFrame.Visible = false
 						show = false
 					elseif not (show) then
-						imagebutton.Image = "rbxassetid://11113709353"
+						lib.Tween(imagebutton, "Rotation", -180)
 						optionsFrame.Visible = true
 						show = true
 					end
