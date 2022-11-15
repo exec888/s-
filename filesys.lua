@@ -26,7 +26,7 @@ local Keys = {}
 function Sync(meta)
 	if typeof(isfolder) ~= "function" then return end
 	if not isfolder(config.ConfigFolder) then makefolder(config.ConfigFolder) end
-	--if not isfile(meta[1]) then 
+	if not isfile(meta[1]) then writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2]) end
 	if meta[2] then
 		writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2])
 	else
@@ -744,12 +744,14 @@ function UILibrary:Window(Table)
 						Toggle = false
 						if Table.Key then
 							Keys[Table.Key].Value = Toggle
+							if config.Save then Sync({Table.Key, "false"})
 						end
 						lib.Tween(button, "BackgroundColor3", Color3.fromRGB(227, 67, 67), "InOut", "Linear", 0.1)
 					elseif not (Toggle) then
 						Toggle = true
 						if Table.Key then
 							Keys[Table.Key].Value = Toggle
+							if config.Save then Sync({Table.Key, "true"})
 						end
 						lib.Tween(button, "BackgroundColor3", Color3.fromRGB(85, 170, 127), "InOut", "Linear", 0.1)
 					end
@@ -768,10 +770,21 @@ function UILibrary:Window(Table)
 				button2.Activated:Connect(function()
 					onActivate()
 				end)
+				local function Boolean(x)
+					if x == "true" then
+						return true
+					elseif x == false then
+						return false
+					end
+				end
 				local setLib = {}
 				function setLib:Set(value)
 					Toggle = not value
 					onActivate()
+				end
+				if config.Save then
+					local bool = Sync({Table.Key})
+					setLib:Set(Boolean(bool))
 				end
 				function setLib:Destroy()
 					buttonFrame:Destroy()
