@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "4C"
+_G.Version = "4D"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -1097,6 +1097,9 @@ function UILibrary:Window(Table)
 					end)
 					if (success) then
 						displayopt.Text = v or v.Name
+						if config.Save and Table.Key then
+							Sync(1, {Table.Key..".txt", displayopt.Text})
+						end
 					else
 						Warn(err)
 					end
@@ -1133,6 +1136,10 @@ function UILibrary:Window(Table)
 				local setLib = {}
 				function setLib:Set(v)
 					onActivate(v)
+				end
+				if config.Save and Table.Key then
+					local selected = Sync(0, {Table.Key..".txt", tostring(Table.Default)})
+					setLib:Set(selected)
 				end
 				function setLib:Destroy()
 					buttonFrame:Destroy()
