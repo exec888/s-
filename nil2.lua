@@ -1,5 +1,5 @@
 local UILibrary = {}
-
+_G.Version = "1A"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -1565,6 +1565,7 @@ function UILibrary:Window(Table)
 	end
 	mainFrame.Visible = true
 	Sys('<font color="rgb(85, 170, 127)">Loaded!</font>', "["..cache.HubName.."] "  .. cache.ScriptName .. " by " .. cache.Creator .. ", press '" ..  cache.Hotkey .. "' to toggle UI.")
+	print(_G.Version)
 	return tabLibrary
 
 end
