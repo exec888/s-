@@ -32,7 +32,8 @@ function Sync(code, meta)
 	elseif code == 0 then
 		if isfile(meta[1]) then
 			print("READ file")
-			return readfile(meta[1])
+			local toReturn = readfile(meta[1])
+			return toReturn
 		end
 	end
 end
@@ -747,14 +748,14 @@ function UILibrary:Window(Table)
 						Toggle = false
 						if Table.Key then
 							Keys[Table.Key].Value = Toggle
-							if config.Save then Sync(1, {Table.Key, "true"}) end
+							if config.Save then Sync(1, {Table.Key, "false"}) end
 						end
 						lib.Tween(button, "BackgroundColor3", Color3.fromRGB(227, 67, 67), "InOut", "Linear", 0.1)
 					elseif not (Toggle) then
 						Toggle = true
 						if Table.Key then
 							Keys[Table.Key].Value = Toggle
-							if config.Save then Sync(1, {Table.Key, "false"}) end
+							if config.Save then Sync(1, {Table.Key, "true"}) end
 						end
 						lib.Tween(button, "BackgroundColor3", Color3.fromRGB(85, 170, 127), "InOut", "Linear", 0.1)
 					end
@@ -786,7 +787,7 @@ function UILibrary:Window(Table)
 					onActivate()
 				end
 				if config.Save then
-					local bool = Sync(0, {Table.Key, tostring(Table.Default)})
+					local bool = Sync(0, {Table.Key)})
 					setLib:Set(Boolean(bool))
 				end
 				function setLib:Destroy()
