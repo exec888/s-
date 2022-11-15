@@ -29,8 +29,10 @@ function Sync(code, meta)
 	if code == 1 then
 		print("write file")
 		writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2])
-	elseif code == 0 then
+	else
+		print("read1")
 		if isfile(meta[1]) then
+			print("read2")
 			print("READ file")
 			local toReturn = readfile(meta[1])
 			return toReturn
