@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "4E"
+_G.Version = "4F"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -30,11 +30,9 @@ function Sync(code, meta)
 		writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2])
 	elseif code == 0 then
 		if isfile(config.ConfigFolder.."/"..meta[1]..".txt") then
-			print("READ file")
 			local toReturn = readfile(config.ConfigFolder.."/"..meta[1]..".txt")
 			return toReturn
 		else
-			print("Missing file created")
 			writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2])
 			return meta[2]
 		end
