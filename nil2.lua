@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "3D"
+_G.Version = "3E"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
