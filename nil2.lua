@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "3E"
+_G.Version = "3F"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -1476,7 +1476,7 @@ function UILibrary:Window(Table)
 					if Table.Key then
 						Keys[Table.Key].Value = Colorpicker.Value
 						if config.Save then 
-							Sync(1, {Table.Key..".txt", game:GetService("HttpService"):JSONEncode( {R = Value.R * 255, G = Value.G * 255, B = Value.B * 255} )})
+							Sync(1, {Table.Key..".txt", game:GetService("HttpService"):JSONEncode( {R = Value.R, G = Value.G, B = Value.B} )})
 						end
 					end
 				end
