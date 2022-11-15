@@ -31,7 +31,7 @@ function Sync(code, meta)
 		writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2])
 	elseif code == 0 then
 		print("read1")
-		if isfile(config.ConfigFolder.."/"..meta[1]) then
+		if isfile(config.ConfigFolder.."/"..meta[1]..".txt") then
 			print("READ file")
 			local toReturn = readfile(config.ConfigFolder.."/"..meta[1]..".txt")
 			return toReturn
