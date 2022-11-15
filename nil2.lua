@@ -23,7 +23,7 @@ local textlog = {}
 local config = {Save = false, ConfigFolder = nil}
 local Keys = {}
 
-function Sync(meta, code)
+function Sync(code, meta)
 	if typeof(isfolder) ~= "function" then return end
 	if not isfolder(config.ConfigFolder) then makefolder(config.ConfigFolder) end
 	if not isfile(meta[1]) then writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2]) end
