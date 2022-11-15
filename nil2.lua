@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "2B"
+_G.Version = "2C"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -33,6 +33,9 @@ function Sync(code, meta)
 			print("READ file")
 			local toReturn = readfile(config.ConfigFolder.."/"..meta[1]..".txt")
 			return toReturn
+		else
+			print("Missing file created")
+			writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2])
 		end
 	end
 end
@@ -931,7 +934,7 @@ function UILibrary:Window(Table)
 					update(change)
 				end
 				if config.Save then 
-					local Num = Sync(0, {Table.Key..".txt"}) 
+					local Num = Sync(0, {Table.Key..".txt", tostring(Table.Default)}) 
 					setLib:Set(tonumber(Num))
 				end
 				function setLib:Destroy()
