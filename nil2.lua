@@ -23,13 +23,13 @@ local textlog = {}
 local config = {Save = false, ConfigFolder = nil}
 local Keys = {}
 
-function Sync(meta)
+function Sync(meta, code)
 	if typeof(isfolder) ~= "function" then return end
 	if not isfolder(config.ConfigFolder) then makefolder(config.ConfigFolder) end
 	if not isfile(meta[1]) then writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2]) end
-	if meta[2] then
+	if code == 1 then
 		writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2])
-	else
+	elseif code == 0 then
 		return readfile(meta[1])
 	end
 end
@@ -744,14 +744,14 @@ function UILibrary:Window(Table)
 						Toggle = false
 						if Table.Key then
 							Keys[Table.Key].Value = Toggle
-							if config.Save then Sync({Table.Key, "false"}) end
+							if config.Save then Sync(1, {Table.Key, "false"}) end
 						end
 						lib.Tween(button, "BackgroundColor3", Color3.fromRGB(227, 67, 67), "InOut", "Linear", 0.1)
 					elseif not (Toggle) then
 						Toggle = true
 						if Table.Key then
 							Keys[Table.Key].Value = Toggle
-							if config.Save then Sync({Table.Key, "true"}) end
+							if config.Save then Sync(1, {Table.Key, "true"}) end
 						end
 						lib.Tween(button, "BackgroundColor3", Color3.fromRGB(85, 170, 127), "InOut", "Linear", 0.1)
 					end
@@ -783,7 +783,7 @@ function UILibrary:Window(Table)
 					onActivate()
 				end
 				if config.Save then
-					local bool = Sync({Table.Key})
+					local bool = Sync(0, {Table.Key, tostring(Table.Default)})
 					setLib:Set(Boolean(bool))
 				end
 				function setLib:Destroy()
