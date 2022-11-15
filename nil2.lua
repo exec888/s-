@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "3F"
+_G.Version = "3G"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -1563,6 +1563,7 @@ function UILibrary:Window(Table)
 				end)
 				if config.Save then 
 					local rgb = Sync(0, {Table.Key..".txt", game:GetService("HttpService"):JSONEncode( {R = Table.Default.R, G = Table.Default.G , B = Table.Default.B })})
+					print(rgb)
 					rgb = Color3.fromRGB(rgb.R, rgb.G, rgb.B)
 					Colorpicker:Set(rgb)	
 				end
