@@ -790,7 +790,7 @@ function UILibrary:Window(Table)
 					onActivate()
 				end
 				if config.Save then
-					local bool = readfile(Table.Key..".txt")--Sync(0, {Table.Key..".txt"})
+					local bool = readfile(config.ConfigFolder.."/"..Table.Key..".txt")--Sync(0, {Table.Key..".txt"})
 					setLib:Set(Boolean(bool))
 				end
 				function setLib:Destroy()
