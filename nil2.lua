@@ -777,7 +777,7 @@ function UILibrary:Window(Table)
 				local function Boolean(x)
 					if x == "true" then
 						return true
-					elseif x == false then
+					elseif x == "false" then
 						return false
 					end
 				end
