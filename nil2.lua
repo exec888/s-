@@ -35,7 +35,8 @@ function Sync(code, meta)
 			return toReturn
 		else
 			print("Missing file created")
-			writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2])
+			writefile(config.ConfigFolder.."/"..meta[1]..".txt", ccccccccc)
+			return meta[2]
 		end
 	end
 end
