@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "2E"
+_G.Version = "2F"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -1287,7 +1287,7 @@ function UILibrary:Window(Table)
 				end
 				if config.Save then
 					local bind = Sync(0, {Table.Key..".txt", tostring(key)})
-					setLib:Set(Enum.KeyCode[key])
+					setLib:Set(bind)
 				end
 				function setLib:Destroy()
 					buttonFrame:Destroy()
