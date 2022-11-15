@@ -787,7 +787,7 @@ function UILibrary:Window(Table)
 					onActivate()
 				end
 				if config.Save then
-					local bool = Sync(0, {Table.Key)})
+					local bool = Sync(0, {Table.Key})
 					setLib:Set(Boolean(bool))
 				end
 				function setLib:Destroy()
