@@ -744,14 +744,14 @@ function UILibrary:Window(Table)
 						Toggle = false
 						if Table.Key then
 							Keys[Table.Key].Value = Toggle
-							if config.Save then Sync({Table.Key, "false"})
+							if config.Save then Sync({Table.Key, "false"}) end
 						end
 						lib.Tween(button, "BackgroundColor3", Color3.fromRGB(227, 67, 67), "InOut", "Linear", 0.1)
 					elseif not (Toggle) then
 						Toggle = true
 						if Table.Key then
 							Keys[Table.Key].Value = Toggle
-							if config.Save then Sync({Table.Key, "true"})
+							if config.Save then Sync({Table.Key, "true"}) end
 						end
 						lib.Tween(button, "BackgroundColor3", Color3.fromRGB(85, 170, 127), "InOut", "Linear", 0.1)
 					end
