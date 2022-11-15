@@ -1,5 +1,5 @@
 local UILibrary = {}
-
+_G.Version = "4F"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -22,6 +22,22 @@ local instanceLog = {}
 local textlog = {}
 local config = {Save = false, ConfigFolder = nil}
 local Keys = {}
+
+function Sync(code, meta)
+	if typeof(isfolder) ~= "function" then return end
+	if not isfolder(config.ConfigFolder) then makefolder(config.ConfigFolder) end
+	if code == 1 then
+		writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2])
+	elseif code == 0 then
+		if isfile(config.ConfigFolder.."/"..meta[1]..".txt") then
+			local toReturn = readfile(config.ConfigFolder.."/"..meta[1]..".txt")
+			return toReturn
+		else
+			writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2])
+			return meta[2]
+		end
+	end
+end
 
 function UILibrary:Window(Table)
 	local cache = {
@@ -733,12 +749,14 @@ function UILibrary:Window(Table)
 						Toggle = false
 						if Table.Key then
 							Keys[Table.Key].Value = Toggle
+							if config.Save then Sync(1, {Table.Key..".txt", "false"}) end
 						end
 						lib.Tween(button, "BackgroundColor3", Color3.fromRGB(227, 67, 67), "InOut", "Linear", 0.1)
 					elseif not (Toggle) then
 						Toggle = true
 						if Table.Key then
 							Keys[Table.Key].Value = Toggle
+							if config.Save then Sync(1, {Table.Key..".txt", "true"}) end
 						end
 						lib.Tween(button, "BackgroundColor3", Color3.fromRGB(85, 170, 127), "InOut", "Linear", 0.1)
 					end
@@ -757,10 +775,21 @@ function UILibrary:Window(Table)
 				button2.Activated:Connect(function()
 					onActivate()
 				end)
+				local function Boolean(x)
+					if x == "true" then
+						return true
+					elseif x == "false" then
+						return false
+					end
+				end
 				local setLib = {}
 				function setLib:Set(value)
 					Toggle = not value
 					onActivate()
+				end
+				if config.Save and Table.Key then
+					local bool = Sync(0, {Table.Key..".txt", tostring(Table.Default)})
+					setLib:Set(Boolean(bool))
 				end
 				function setLib:Destroy()
 					buttonFrame:Destroy()
@@ -862,6 +891,7 @@ function UILibrary:Window(Table)
 					label.Text = tostring(int)
 					if Table.Key then
 						Keys[Table.Key].Value = int
+						if config.Save then Sync(1, {Table.Key..".txt", tostring(int)}) end
 					end
 					return Table.Callback(int)
 				end
@@ -901,6 +931,10 @@ function UILibrary:Window(Table)
 					local change = tonumber(value)/Table.Max
 					slider.Size = UDim2.new(change, 0,1, 0)
 					update(change)
+				end
+				if config.Save and Table.Key then 
+					local Num = Sync(0, {Table.Key..".txt", tostring(Table.Default)}) 
+					setLib:Set(tonumber(Num))
 				end
 				function setLib:Destroy()
 					buttonFrame:Destroy()
@@ -1061,6 +1095,9 @@ function UILibrary:Window(Table)
 					end)
 					if (success) then
 						displayopt.Text = v or v.Name
+						if config.Save and Table.Key then
+							Sync(1, {Table.Key..".txt", displayopt.Text})
+						end
 					else
 						Warn(err)
 					end
@@ -1097,6 +1134,10 @@ function UILibrary:Window(Table)
 				local setLib = {}
 				function setLib:Set(v)
 					onActivate(v)
+				end
+				if config.Save and Table.Key then
+					local selected = Sync(0, {Table.Key..".txt", tostring(Table.Default)})
+					setLib:Set(selected)
 				end
 				function setLib:Destroy()
 					buttonFrame:Destroy()
@@ -1235,6 +1276,7 @@ function UILibrary:Window(Table)
 						InputButton.Text = key.Name
 						if Table.Key then
 							Keys[Table.Key].Value = key
+							if config.Save then Sync(1, {Table.Key..".txt", tostring(key.Name)}) end
 						end
 					end
 
@@ -1247,6 +1289,10 @@ function UILibrary:Window(Table)
 						Keys[Table.Key].Value = key
 					end
 					InputButton.Text = key.Name
+				end
+				if config.Save and Table.Key then
+					local bind = Sync(0, {Table.Key..".txt", tostring(Table.Default.Name)})
+					setLib:Set(Enum.KeyCode[bind])
 				end
 				function setLib:Destroy()
 					buttonFrame:Destroy()
@@ -1263,7 +1309,7 @@ function UILibrary:Window(Table)
 					Position = UDim2.new(0, 0,0, 0), 
 					Size = UDim2.new(1, 0,0.115, 0),
 				})
-				
+
 				local buttonFrame_corner = lib.Create("UICorner", buttonFrame, {
 					CornerRadius = UDim.new(0, 5)
 				})
@@ -1397,14 +1443,14 @@ function UILibrary:Window(Table)
 				buttonFrame.AutomaticSize = "Y"
 				local bottomFrameNewSize = bottomFrame.AbsoluteSize.Y
 				bottomFrame.Size = UDim2.new(1,0,0,0)
-				
+
 				topFrame.MouseEnter:Connect(function()
 					lib.Tween(Button_highlight, "BackgroundTransparency", 0.95, "InOut", "Linear", 0.1)
 				end)
 				topFrame.MouseLeave:Connect(function()
 					lib.Tween(Button_highlight, "BackgroundTransparency", 1, "InOut", "Linear", 0.1)
 				end)
-				
+
 				local tempTog = false
 				active.MouseButton1Down:Connect(function()
 					if not tempTog then
@@ -1434,6 +1480,9 @@ function UILibrary:Window(Table)
 					Table.Callback(Display.BackgroundColor3)
 					if Table.Key then
 						Keys[Table.Key].Value = Colorpicker.Value
+						if config.Save then 
+							Sync(1, {Table.Key..".txt", game:GetService("HttpService"):JSONEncode( {R = Value.R, G = Value.G, B = Value.B} )})
+						end
 					end
 				end
 				local function UpdateColorPicker()
@@ -1517,13 +1566,19 @@ function UILibrary:Window(Table)
 						UpdateColorPicker()
 					end
 				end)
+				if config.Save  and Table.Key then 
+					local rgb = Sync(0, {Table.Key..".txt", game:GetService("HttpService"):JSONEncode( {R = Table.Default.R, G = Table.Default.G , B = Table.Default.B })})
+					rgb = game:GetService("HttpService"):JSONDecode(rgb)
+					rgb = Color3.fromRGB(rgb.R*255, rgb.G*255, rgb.B*255)
+					Colorpicker:Set(rgb)	
+				end
 				Colorpicker:Set(Colorpicker.Value)
 				local setLib = {}
 				function setLib:Set(Value)
 					Colorpicker:Set(Value)
 				end
 				return setLib
-				
+
 			end
 
 			return buttonsLibrary
@@ -1535,6 +1590,7 @@ function UILibrary:Window(Table)
 	end
 	mainFrame.Visible = true
 	Sys('<font color="rgb(85, 170, 127)">Loaded!</font>', "["..cache.HubName.."] "  .. cache.ScriptName .. " by " .. cache.Creator .. ", press '" ..  cache.Hotkey .. "' to toggle UI.")
+	print("7Exec UI Library v".._G.Version)
 	return tabLibrary
 
 end
