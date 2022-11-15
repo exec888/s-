@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "1A"
+_G.Version = "1B"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -59,6 +59,7 @@ function UILibrary:Window(Table)
 	if Table.SaveConfig then
 		config.Save = Table.SaveConfig[2]
 		config.ConfigFolder = Table.SaveConfig[1]
+		makefolder(config.ConfigFolder)
 	else
 		config.Save = false
 	end
