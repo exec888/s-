@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "4D"
+_G.Version = "4E"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -789,7 +789,7 @@ function UILibrary:Window(Table)
 					Toggle = not value
 					onActivate()
 				end
-				if config.Save then
+				if config.Save and Table.Key then
 					local bool = Sync(0, {Table.Key..".txt", tostring(Table.Default)})
 					setLib:Set(Boolean(bool))
 				end
@@ -934,7 +934,7 @@ function UILibrary:Window(Table)
 					slider.Size = UDim2.new(change, 0,1, 0)
 					update(change)
 				end
-				if config.Save then 
+				if config.Save and Table.Key then 
 					local Num = Sync(0, {Table.Key..".txt", tostring(Table.Default)}) 
 					setLib:Set(tonumber(Num))
 				end
@@ -1292,7 +1292,7 @@ function UILibrary:Window(Table)
 					end
 					InputButton.Text = key.Name
 				end
-				if config.Save then
+				if config.Save and Table.Key then
 					local bind = Sync(0, {Table.Key..".txt", tostring(Table.Default.Name)})
 					setLib:Set(Enum.KeyCode[bind])
 				end
@@ -1568,13 +1568,13 @@ function UILibrary:Window(Table)
 						UpdateColorPicker()
 					end
 				end)
-				if config.Save then 
+				if config.Save  and Table.Key then 
 					local rgb = Sync(0, {Table.Key..".txt", game:GetService("HttpService"):JSONEncode( {R = Table.Default.R, G = Table.Default.G , B = Table.Default.B })})
 					rgb = game:GetService("HttpService"):JSONDecode(rgb)
 					rgb = Color3.fromRGB(rgb.R*255, rgb.G*255, rgb.B*255)
 					Colorpicker:Set(rgb)	
 				end
-
+				Colorpicker:Set(Colorpicker.Value)
 				local setLib = {}
 				function setLib:Set(Value)
 					Colorpicker:Set(Value)
@@ -1592,7 +1592,7 @@ function UILibrary:Window(Table)
 	end
 	mainFrame.Visible = true
 	Sys('<font color="rgb(85, 170, 127)">Loaded!</font>', "["..cache.HubName.."] "  .. cache.ScriptName .. " by " .. cache.Creator .. ", press '" ..  cache.Hotkey .. "' to toggle UI.")
-	print(_G.Version)
+	print("7Exec UI Library v".._G.Version)
 	return tabLibrary
 
 end
