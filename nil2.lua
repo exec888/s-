@@ -1286,7 +1286,7 @@ function UILibrary:Window(Table)
 					InputButton.Text = key.Name
 				end
 				if config.Save then
-					local bind = Sync(0, {Table.Key..".txt", tostring(key)})
+					local bind = Sync(0, {Table.Key..".txt", tostring(Table.Default)})
 					setLib:Set(bind)
 				end
 				function setLib:Destroy()
