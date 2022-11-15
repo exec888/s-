@@ -789,7 +789,7 @@ function UILibrary:Window(Table)
 					onActivate()
 				end
 				if config.Save then
-					local bool = Sync(0, {Table.Key..".txt"})
+					local bool = Sync(0, {Table.Key..".txt", tostring(Table.Default)})
 					setLib:Set(Boolean(bool))
 				end
 				function setLib:Destroy()
