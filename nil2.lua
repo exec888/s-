@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "3C"
+_G.Version = "3D"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -1304,7 +1304,7 @@ function UILibrary:Window(Table)
 					Position = UDim2.new(0, 0,0, 0), 
 					Size = UDim2.new(1, 0,0.115, 0),
 				})
-				
+
 				local buttonFrame_corner = lib.Create("UICorner", buttonFrame, {
 					CornerRadius = UDim.new(0, 5)
 				})
@@ -1438,14 +1438,14 @@ function UILibrary:Window(Table)
 				buttonFrame.AutomaticSize = "Y"
 				local bottomFrameNewSize = bottomFrame.AbsoluteSize.Y
 				bottomFrame.Size = UDim2.new(1,0,0,0)
-				
+
 				topFrame.MouseEnter:Connect(function()
 					lib.Tween(Button_highlight, "BackgroundTransparency", 0.95, "InOut", "Linear", 0.1)
 				end)
 				topFrame.MouseLeave:Connect(function()
 					lib.Tween(Button_highlight, "BackgroundTransparency", 1, "InOut", "Linear", 0.1)
 				end)
-				
+
 				local tempTog = false
 				active.MouseButton1Down:Connect(function()
 					if not tempTog then
@@ -1562,17 +1562,17 @@ function UILibrary:Window(Table)
 					end
 				end)
 				if config.Save then 
-					local rgb = Sync(0, {Table.Key..".txt", game:GetService("HttpService"):JSONEncode( {R = Table.Default.R, G = Table.Default.G , B = Table.Default.B }})
+					local rgb = Sync(0, {Table.Key..".txt", game:GetService("HttpService"):JSONEncode( {R = Table.Default.R, G = Table.Default.G , B = Table.Default.B })})
 					rgb = Color3.fromRGB(rgb.R, rgb.G, rgb.B)
-					Colorpicker:Set(Colorpicker.Value)	
+					Colorpicker:Set(rgb)	
 				end
-				
+
 				local setLib = {}
 				function setLib:Set(Value)
 					Colorpicker:Set(Value)
 				end
 				return setLib
-				
+
 			end
 
 			return buttonsLibrary
