@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "2G"
+_G.Version = "2E"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -1271,6 +1271,7 @@ function UILibrary:Window(Table)
 						InputButton.Text = key.Name
 						if Table.Key then
 							Keys[Table.Key].Value = key
+							if config.Save then Sync(1, {Table.Key..".txt", tostring(key)}) end
 						end
 					end
 
@@ -1283,6 +1284,10 @@ function UILibrary:Window(Table)
 						Keys[Table.Key].Value = key
 					end
 					InputButton.Text = key.Name
+				end
+				if config.Save then
+					local bind = Sync(0, {Table.Key..".txt", tostring(key)})
+					setLib:Set(Enum.KeyCode[key])
 				end
 				function setLib:Destroy()
 					buttonFrame:Destroy()
