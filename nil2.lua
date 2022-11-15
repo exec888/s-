@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "2A"
+_G.Version = "2B"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -27,10 +27,8 @@ function Sync(code, meta)
 	if typeof(isfolder) ~= "function" then return end
 	if not isfolder(config.ConfigFolder) then makefolder(config.ConfigFolder) end
 	if code == 1 then
-		print("write file")
 		writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2])
 	elseif code == 0 then
-		print("read1")
 		if isfile(config.ConfigFolder.."/"..meta[1]..".txt") then
 			print("READ file")
 			local toReturn = readfile(config.ConfigFolder.."/"..meta[1]..".txt")
@@ -891,6 +889,7 @@ function UILibrary:Window(Table)
 					label.Text = tostring(int)
 					if Table.Key then
 						Keys[Table.Key].Value = int
+						if config.Save then Sync(1, {Table.Key..".txt", tostring(int)}) end
 					end
 					return Table.Callback(int)
 				end
@@ -930,6 +929,10 @@ function UILibrary:Window(Table)
 					local change = tonumber(value)/Table.Max
 					slider.Size = UDim2.new(change, 0,1, 0)
 					update(change)
+				end
+				if config.Save then 
+					local Num = Sync(0, {Table.Key..".txt"}) 
+					setLib:Set(tonumber(Num))
 				end
 				function setLib:Destroy()
 					buttonFrame:Destroy()
