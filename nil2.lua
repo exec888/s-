@@ -26,11 +26,14 @@ local Keys = {}
 function Sync(code, meta)
 	if typeof(isfolder) ~= "function" then return end
 	if not isfolder(config.ConfigFolder) then makefolder(config.ConfigFolder) end
-	if not isfile(meta[1]) then writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2]) end
 	if code == 1 then
+		print("write file")
 		writefile(config.ConfigFolder.."/"..meta[1]..".txt", meta[2])
 	elseif code == 0 then
-		return readfile(meta[1])
+		if isfile(meta[1]) then
+			print("READ file")
+			return readfile(meta[1])
+		end
 	end
 end
 
