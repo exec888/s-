@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "3B"
+_G.Version = "3C"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -1475,6 +1475,9 @@ function UILibrary:Window(Table)
 					Table.Callback(Display.BackgroundColor3)
 					if Table.Key then
 						Keys[Table.Key].Value = Colorpicker.Value
+						if config.Save then 
+							Sync(1, {Table.Key..".txt", game:GetService("HttpService"):JSONEncode( {R = Value.R * 255, G = Value.G * 255, B = Value.B * 255} )})
+						end
 					end
 				end
 				local function UpdateColorPicker()
@@ -1558,7 +1561,12 @@ function UILibrary:Window(Table)
 						UpdateColorPicker()
 					end
 				end)
-				Colorpicker:Set(Colorpicker.Value)
+				if config.Save then 
+					local rgb = Sync(0, {Table.Key..".txt", game:GetService("HttpService"):JSONEncode( {R = Table.Default.R, G = Table.Default.G , B = Table.Default.B }})
+					rgb = Color3.fromRGB(rgb.R, rgb.G, rgb.B)
+					Colorpicker:Set(Colorpicker.Value)	
+				end
+				
 				local setLib = {}
 				function setLib:Set(Value)
 					Colorpicker:Set(Value)
