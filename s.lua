@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "4F"
+_G.Version = "4E"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -10,6 +10,14 @@ local screenGui = lib.Create("ScreenGui", game.CoreGui, {
 	IgnoreGuiInset = true,
 	ResetOnSpawn = false,
 })
+_G.Noty = false
+if not _G.Noty then
+	local sound = Instance.new("Sound")
+	sound.Parent = screenGui
+	sound.Volume = 0.25
+	sound.SoundId = "rbxassetid://1562091866"
+	_G.Noty = sound
+end
 if syn then
 	syn.protect_gui(screenGui)
 	screenGui.Parent = game.CoreGui
@@ -20,7 +28,7 @@ elseif not game:GetService("RunService"):IsStudio() then
 end
 local instanceLog = {}
 local textlog = {}
-local config = {Save = false, ConfigFolder = nil}
+local config = {Save = false, ConfigFolder = nil, sounds = true}
 local Keys = {}
 
 function Sync(code, meta)
@@ -61,7 +69,11 @@ function UILibrary:Window(Table)
 	else
 		config.Save = false
 	end
-
+	if Table.Sounds then
+		config.sounds = true
+	else
+		config.sounds = false
+	end
 	Sys('<font color="rgb(85, 170, 127)">Loading..</font>', "["..cache.HubName.."] "  .. cache.ScriptName .. " by " .. cache.Creator, 60)
 	function UILibrary:Destroy()
 		screenGui:Destroy()
@@ -1680,6 +1692,9 @@ function UILibrary:Notification(Table)
 
 		table.insert(instanceLog, frame)
 		table.insert(textlog, Table)
+		if config.sounds then
+			_G.Noty:Play()
+		end
 		lib.Tween(frame, "Position", UDim2.new(0.5,0,0.85,0), "InOut", "Back", 0.25)
 		wait(delay_)
 		lib.Tween(frame, "Transparency", 1, "InOut", "Linear", delay_)
