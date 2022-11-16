@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "4E"
+_G.Version = "4F"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -328,6 +328,7 @@ function UILibrary:Window(Table)
 			CanvasSize = UDim2.new(0, 0,1, 0),
 			ScrollBarImageTransparency = 1,
 			ScrollBarThickness = 1,
+			ElasticBehavior = "Never", --
 			Visible = false,
 		})
 		local listlayout_tabScrollFrame = lib.Create("UIListLayout", tabScrollFrame, {
