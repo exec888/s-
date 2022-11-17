@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "4F"
+_G.Version = "5A"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -220,7 +220,7 @@ function UILibrary:Window(Table)
 		BorderSizePixel = 0, 
 		Position = UDim2.new(0, 0,0.1, 0), 
 		Size = UDim2.new(1, 0,0.9, 0),
-		CanvasSize = UDim2.new(0, 0,1, 0),
+		CanvasSize = UDim2.new(0, 0,0, 0),
 		AutomaticCanvasSize = "Y",
 		ScrollBarThickness = 0,
 	})
@@ -286,8 +286,10 @@ function UILibrary:Window(Table)
 	end)
 
 	local tabLibrary = {}
-
+	local sectionLibrary = {}
+	local buttonsLibrary = {}
 	local currentTab
+
 	function tabLibrary:AddTab(Text)
 		local tabButtonframe = lib.Create("TextButton", sideButtonsFrame, {
 			BackgroundColor3 = Color3.fromRGB(29,29,29), 
@@ -328,12 +330,12 @@ function UILibrary:Window(Table)
 			CanvasSize = UDim2.new(0, 0,1, 0),
 			ScrollBarImageTransparency = 1,
 			ScrollBarThickness = 1,
-			ElasticBehavior = "Never", --
 			Visible = false,
 		})
 		local listlayout_tabScrollFrame = lib.Create("UIListLayout", tabScrollFrame, {
 			Padding = UDim.new(0, 5),
 			SortOrder = "LayoutOrder",
+			HorizontalAlignment = "Center",
 		})
 
 		tabButtonframe.MouseEnter:Connect(function()
@@ -361,10 +363,12 @@ function UILibrary:Window(Table)
 
 		tabButton.MouseButton1Down:Connect(onToggle)
 		tabButtonframe.MouseButton1Down:Connect(onToggle)
-		local sectionLibrary = {}
+		--local sectionLibrary = {}
 
 		function sectionLibrary:AddSection(Text)-- fix sections
-			local sectionFrame = lib.Create("Frame", tabScrollFrame, {
+			if not Text then
+			else
+				local sectionFrame = lib.Create("Frame", tabScrollFrame, {
 				BackgroundColor3 = Color3.fromRGB(29, 29, 29), 
 				BackgroundTransparency = 1, 
 				BorderSizePixel = 1, 
@@ -398,8 +402,10 @@ function UILibrary:Window(Table)
 				TextColor3 = Color3.fromRGB(155, 155, 155),
 				TextXAlignment = "Left",
 			})
-
-			local buttonsLibrary = {}
+			end
+			
+			
+			--local buttonsLibrary = {}
 
 			function buttonsLibrary:AddButton(Table)
 				local buttonFrame = lib.Create("Frame", tabScrollFrame, {
@@ -1035,18 +1041,28 @@ function UILibrary:Window(Table)
 					Image = "rbxassetid://11563616615",
 					ZIndex = 2
 				})
-				local optionsFrame = lib.Create("Frame", buttonFrame, {
-					BackgroundColor3 = Color3.fromRGB(29, 29, 29), 
-					BackgroundTransparency = 0, 
-					BorderSizePixel = 0, 
-					Position = UDim2.new(0, 0,1, 0), 
-					Size = UDim2.new(1, 0,1, 0),
-					ZIndex = 5,
+				local optionsFrame = lib.Create("Frame", tabScrollFrame, {
+					AutomaticSize = "Y",
+					AnchorPoint = Vector2.new(0.5, 0),
+					Position = UDim2.new(0.5,0,0,0),
+					Size = UDim2.new(0.99,0,0,0),
+					BackgroundTransparency = 0,
+					BorderSizePixel = 0,
+					BackgroundColor3 = Color3.fromRGB(44, 44, 44),
 					Visible = false,
 				})
 				local uilistlayout_optionsFrame = lib.Create("UIListLayout", optionsFrame, {
 					SortOrder = "LayoutOrder",
 					HorizontalAlignment = "Right",
+				})
+				local optionsFrame_corner = lib.Create("UICorner", optionsFrame, {
+					CornerRadius = UDim.new(0, 5)
+				})
+				local optionsFrame_stroke = lib.Create("UIStroke", optionsFrame, {
+					ApplyStrokeMode = "Contextual",
+					Color = Color3.fromRGB(155,155,155),
+					Thickness = 1,
+					Transparency = 0.75,
 				})
 				buttonFrame.MouseEnter:Connect(function()
 					lib.Tween(Button_highlight, "BackgroundTransparency", 0.95, "InOut", "Linear", 0.1)
@@ -1054,6 +1070,9 @@ function UILibrary:Window(Table)
 				buttonFrame.MouseLeave:Connect(function()
 					lib.Tween(Button_highlight, "BackgroundTransparency", 1, "InOut", "Linear", 0.1)
 				end)
+
+				local show = false
+				local OptionsOffsetY = 20
 				local function createOpt(t)
 					if typeof(t) == "Instance" then
 						t = t.Name
@@ -1062,42 +1081,62 @@ function UILibrary:Window(Table)
 					end
 					local buttonFrame = lib.Create("Frame", optionsFrame, {
 						BackgroundColor3 = Color3.fromRGB(29, 29, 29), 
-						BackgroundTransparency = 0, 
+						BackgroundTransparency = 1, 
 						BorderSizePixel = 0, 
 						Position = UDim2.new(0, 0,0, 0), 
-						Size = UDim2.new(1, 0,0.8, 0),
-						ZIndex = 5
+						Size = UDim2.new(1, 0,0, 20),
+						Visible = false
 					})
+
 					local button = lib.Create("TextButton", buttonFrame, {
 						AutoButtonColor = false,
-						AnchorPoint = Vector2.new(0.5,0.5),
+						AnchorPoint = Vector2.new(0,0.5),
 						BackgroundColor3 = Color3.fromRGB(50, 50, 50), 
 						BackgroundTransparency = 1, 
 						BorderSizePixel = 0, 
-						Position = UDim2.new(0.515, 0,0.5, 0), 
-						Size = UDim2.new(0.975, 0,0.55, 0),
+						Position = UDim2.new(0, 0,0.5, 0), 
+						Size = UDim2.new(1, 0,0.55, 0),
 						Text = t  ,
-						Font = "GothamMedium",
+						Font = Enum.Font.GothamMedium,
 						TextScaled = true,
-						TextColor3 = Color3.fromRGB(255, 255, 255),
+						TextColor3 = Color3.fromRGB(155, 155, 155),
 						TextXAlignment = "Left",
-						ZIndex = 5
+						TextTransparency = 1,
 					})
-
+					if show then
+						OptionsOffsetY = 0
+						for _,v in pairs(optionsFrame:GetChildren()) do
+							if v:IsA("Frame") then
+								OptionsOffsetY += 20 -- 
+							end
+						end
+						optionsFrame.Visible = true
+						lib.Tween(optionsFrame, "Size", UDim2.new(0.99,0,0,OptionsOffsetY), "Out", "Quint", 0.1)
+						buttonFrame.Visible = true
+						button.TextTransparency = 0
+					end
+					local padding = lib.Create("UIPadding", button, {
+						PaddingLeft = UDim.new(0.025, 0),
+					})
 					if Table.Key then
 						Keys[Table.Key] = {}
 						Keys[Table.Key]["Options"] = Table.Options
 					end
 
+					spawn(function()
+						buttonFrame.MouseEnter:Connect(function()
+							lib.Tween(button, "TextColor3", Color3.fromRGB(200, 200, 200))
+						end)
+						buttonFrame.MouseLeave:Connect(function()
+							lib.Tween(button, "TextColor3", Color3.fromRGB(155, 155, 155))
+						end)
+					end)
+
 					return button
 				end
 
-				local show = false
 
 				local function onActivate(v)
-					optionsFrame.Visible = false
-					show = false
-					lib.Tween(imagebutton, "Rotation", 0)
 					local success, err = pcall(function()
 						if typeof(v) == "Instance" then
 							v = v.Name
@@ -1114,6 +1153,17 @@ function UILibrary:Window(Table)
 					else
 						Warn(err)
 					end
+					lib.Tween(imagebutton, "Rotation", 0)
+					for _,v in pairs(optionsFrame:GetChildren()) do
+						if v:IsA("Frame") then
+							v.Visible = false -- 
+							lib.Tween(v:FindFirstChildOfClass("TextButton"), "TextTransparency", 1)
+						end
+					end
+					lib.Tween(optionsFrame, "Size", UDim2.new(0.99,0,0,0), "In", "Quint", 0.1)
+					wait(0.1)
+					optionsFrame.Visible = false
+					show = false
 				end
 
 				if Table.Default and not Table.Options then
@@ -1133,11 +1183,33 @@ function UILibrary:Window(Table)
 				local function toggleOpt()
 					if (show) then
 						lib.Tween(imagebutton, "Rotation", 0)
+						for _,v in pairs(optionsFrame:GetChildren()) do
+							if v:IsA("Frame") then
+								v.Visible = false --
+								lib.Tween(v:FindFirstChildOfClass("TextButton"), "TextTransparency", 1)
+							end
+						end
+						lib.Tween(optionsFrame, "Size", UDim2.new(0.99,0,0,0), "In", "Quint", 0.1)
+						wait(0.1)
 						optionsFrame.Visible = false
 						show = false
 					elseif not (show) then
 						lib.Tween(imagebutton, "Rotation", -180)
+						OptionsOffsetY = 0
+						for _,v in pairs(optionsFrame:GetChildren()) do
+							if v:IsA("Frame") then
+								OptionsOffsetY += 20 -- 
+							end
+						end
 						optionsFrame.Visible = true
+						lib.Tween(optionsFrame, "Size", UDim2.new(0.99,0,0,OptionsOffsetY), "Out", "Quint", 0.1)
+						wait(0.1)
+						for _,v in pairs(optionsFrame:GetChildren()) do
+							if v:IsA("Frame") then
+								v.Visible = true -- 
+								lib.Tween(v:FindFirstChildOfClass("TextButton"), "TextTransparency", 0)
+							end
+						end
 						show = true
 					end
 				end
@@ -1174,7 +1246,6 @@ function UILibrary:Window(Table)
 						for _, v in pairs(upTable) do
 							table.insert(Table.Options, v)
 						end
-
 						for _, v in pairs(optionsFrame:GetChildren()) do
 							if v:IsA("Frame") then
 								v:Destroy()
@@ -1391,27 +1462,31 @@ function UILibrary:Window(Table)
 					Text = "",
 					ZIndex = 2,
 				})
-				local bottomFrame = lib.Create("Frame", buttonFrame, {
-					AutomaticSize = "Y",
-					BackgroundColor3 = Color3.fromRGB(54, 54, 54), 
-					BackgroundTransparency = 0, 
-					BorderSizePixel = 0, 
-					Position = UDim2.new(0, 0,0, 0), 
-					Size = UDim2.new(1, 0,2.5, 0), -- offset, scale y = 2.5
-					Name = "2",
-					Visible = false
+				local bottomFrame = lib.Create("Frame", tabScrollFrame, {
+					AnchorPoint = Vector2.new(0, 0.5),
+					BackgroundColor3 = Color3.fromRGB(44, 44, 44), 
+					BorderSizePixel = 0,
+					Size = UDim2.new(0.99, 0,0, 0), -- 0.325 y scale
+					Visible = false,
+				})
+				local bottomFrame_stroke = lib.Create("UIStroke", bottomFrame, {
+					ApplyStrokeMode = "Contextual",
+					Color = Color3.fromRGB(155, 155, 155),
+					Thickness = 1,
+					Transparency = 0.75,
 				})
 				local bottomFrame_corner = lib.Create("UICorner", bottomFrame, {
 					CornerRadius = UDim.new(0, 5)
 				})
 				local Hue = lib.Create("Frame", bottomFrame, {
-					AutomaticSize = "Y",
+					--AutomaticSize = "Y",
 					AnchorPoint = Vector2.new(1,0.5),
 					BackgroundColor3 = Color3.fromRGB(163, 162, 165), 
-					BackgroundTransparency = 0, 
+					BackgroundTransparency = 1, -- default
 					BorderSizePixel = 0, 
-					Position = UDim2.new(0.975, 0,0.5, 0), 
-					Size = UDim2.new(0.063, 0,0.8, 0), -- offset, scale y = 2.5
+					Position = UDim2.new(0.985, 0,0.5, 0), 
+					Size = UDim2.new(0.063, 0,0.85, 0), -- offset, scale y = 2.5
+					Visible = false,
 				})
 				local HueSelection = lib.Create("Frame", Hue, {
 					AnchorPoint = Vector2.new(0.5, 0.5),
@@ -1429,15 +1504,19 @@ function UILibrary:Window(Table)
 					Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 4)), ColorSequenceKeypoint.new(0.20, Color3.fromRGB(234, 255, 0)), ColorSequenceKeypoint.new(0.40, Color3.fromRGB(21, 255, 0)), ColorSequenceKeypoint.new(0.60, Color3.fromRGB(0, 255, 255)), ColorSequenceKeypoint.new(0.80, Color3.fromRGB(0, 17, 255)), ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 0, 251)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 4))}
 				})
 				local Color = lib.Create("ImageLabel", bottomFrame, {
+					BackgroundTransparency = 1, -- default
+					ImageTransparency = 1, -- default
 					AnchorPoint = Vector2.new(0, 0.5),
 					BorderSizePixel = 0,
-					Position = UDim2.new(0.025, 0,0.5, 0), 
-					Size = UDim2.new(0.875, 0,0.8, 0),
+					Position = UDim2.new(0.015, 0,0.5, 0), 
+					Size = UDim2.new(0.895, 0,0.85, 0),
 					ScaleType = "Stretch",
 					Image = "rbxassetid://4155801252",
+					Visible = false,
 				})
 				local ColorSelection = lib.Create("ImageLabel", Color, {
 					AnchorPoint = Vector2.new(0.5, 0.5),
+					BackgroundTransparency = 1,
 					BorderSizePixel = 0,
 					Position = UDim2.new(1, 0,0, 0), 
 					Size = UDim2.new(0, 5,0, 5),
@@ -1448,15 +1527,6 @@ function UILibrary:Window(Table)
 					CornerRadius = UDim.new(0, 5)
 				})
 
-				-- Messy way to convert to offset because AutomaticSize doesn't work properly for scale
-				buttonFrame.Size = UDim2.new(1,0,0,buttonFrame.AbsoluteSize.Y)
-				topFrame.Size = UDim2.new(1,0,0,topFrame.AbsoluteSize.Y)
-				active.Size = UDim2.new(1,0,0,topFrame.AbsoluteSize.Y)
-				bottomFrame.Size = UDim2.new(1,0,0,bottomFrame.AbsoluteSize.Y)
-				buttonFrame.AutomaticSize = "Y"
-				local bottomFrameNewSize = bottomFrame.AbsoluteSize.Y
-				bottomFrame.Size = UDim2.new(1,0,0,0)
-
 				topFrame.MouseEnter:Connect(function()
 					lib.Tween(Button_highlight, "BackgroundTransparency", 0.95, "InOut", "Linear", 0.1)
 				end)
@@ -1465,24 +1535,38 @@ function UILibrary:Window(Table)
 				end)
 
 				local tempTog = false
-				active.MouseButton1Down:Connect(function()
+				local Mouse = game.Players.LocalPlayer:GetMouse()
+				local ColorH, ColorS, ColorV = 1, 1, 1
+				local Colorpicker = {Value = Table.Default or Color3.fromRGB(255, 255, 127)}
+				active.Activated:Connect(function()
 					if not tempTog then
-						lib.Tween(bottomFrame, "Size", UDim2.new(1,0,0, bottomFrameNewSize), "InOut", "Quad")
 						bottomFrame.Visible = true
-						Button_highlight.Visible = false
+						lib.Tween(bottomFrame, "Size", UDim2.new(0.99,0,0.325,0), "Out", "Quint", 0.1)
+						wait(0.1)
+						Color.Visible = true
+						Hue.Visible = true
+						lib.Tween(Color, "BackgroundTransparency", 0) lib.Tween(Color, "ImageTransparency", 0)
+						lib.Tween(Hue, "BackgroundTransparency", 0) lib.Tween(HueSelection, "BackgroundTransparency", 0)
+						lib.Tween(ColorSelection, "ImageTransparency", 0)
+
+						ColorH = 1 - (math.clamp(HueSelection.AbsolutePosition.Y - Hue.AbsolutePosition.Y, 0, Hue.AbsoluteSize.Y) / Hue.AbsoluteSize.Y)
+						ColorS = (math.clamp(ColorSelection.AbsolutePosition.X - Color.AbsolutePosition.X, 0, Color.AbsoluteSize.X) / Color.AbsoluteSize.X)
+						ColorV = 1 - (math.clamp(ColorSelection.AbsolutePosition.Y - Color.AbsolutePosition.Y, 0, Color.AbsoluteSize.Y) / Color.AbsoluteSize.Y)
+
 						tempTog = true
 					else
-						lib.Tween(bottomFrame, "Size", UDim2.new(1,0,0, 0), "InOut", "Quad")
+						lib.Tween(Color, "BackgroundTransparency", 1) lib.Tween(Color, "ImageTransparency", 1)
+						lib.Tween(Hue, "BackgroundTransparency", 1) lib.Tween(HueSelection, "BackgroundTransparency", 1)
+						lib.Tween(ColorSelection, "ImageTransparency", 1)
+						wait(0.1) Color.Visible = false Hue.Visible = false	
+						lib.Tween(bottomFrame, "Size", UDim2.new(0.99,0,0,0), "Out", "Quint", 0.1)	
 						wait(0.1)
 						bottomFrame.Visible = false
-						Button_highlight.Visible = true
+
 						tempTog = false
 					end
 				end)
 
-				local Mouse = game.Players.LocalPlayer:GetMouse()
-				local ColorH, ColorS, ColorV = 1, 1, 1
-				local Colorpicker = {Value = Table.Default or Color3.fromRGB(255, 255, 127)}
 				if Table.Key then
 					Keys[Table.Key] = {}
 					Keys[Table.Key]["Value"] = Colorpicker.Value
@@ -1504,9 +1588,7 @@ function UILibrary:Window(Table)
 					Colorpicker:Set(Display.BackgroundColor3)
 					--Table.Callback(Display.BackgroundColor3)
 				end 
-				ColorH = 1 - (math.clamp(HueSelection.AbsolutePosition.Y - Hue.AbsolutePosition.Y, 0, Hue.AbsoluteSize.Y) / Hue.AbsoluteSize.Y)
-				ColorS = (math.clamp(ColorSelection.AbsolutePosition.X - Color.AbsolutePosition.X, 0, Color.AbsoluteSize.X) / Color.AbsoluteSize.X)
-				ColorV = 1 - (math.clamp(ColorSelection.AbsolutePosition.Y - Color.AbsolutePosition.Y, 0, Color.AbsoluteSize.Y) / Color.AbsoluteSize.Y)
+
 				local dragging
 				Color.InputBegan:Connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -1598,12 +1680,52 @@ function UILibrary:Window(Table)
 
 		end
 
+		function sectionLibrary:AddButton(Table)
+			self:AddSection(false)
+			buttonsLibrary:AddButton(Table)
+		end
+		function sectionLibrary:AddTextBox(Table)
+			self:AddSection(false)
+			buttonsLibrary:AddTextBox(Table)
+		end
+		function sectionLibrary:AddToggle(Table)
+			self:AddSection(false)
+			buttonsLibrary:AddToggle(Table)
+		end
+		function sectionLibrary:AddParagraph(Table)
+			self:AddSection(false)
+			buttonsLibrary:AddParagraph(Table)
+		end
+		function sectionLibrary:AddSlider(Table)
+			self:AddSection(false)
+			buttonsLibrary:AddSlider(Table)
+		end
+		function sectionLibrary:AddDropDown(Table)
+			self:AddSection(false)
+			buttonsLibrary:AddDropDown(Table)
+		end
+		function sectionLibrary:AddBind(Table)
+			self:AddSection(false)
+			buttonsLibrary:AddBind(Table)
+		end
+		function sectionLibrary:AddLabel(Table)
+			self:AddSection(false)
+			buttonsLibrary:AddLabel(Table)
+		end
+		function sectionLibrary:AddColorPicker(Table)
+			self:AddSection(false)
+			buttonsLibrary:AddColorPicker(Table)
+		end
 		return sectionLibrary
 
 	end
+
 	mainFrame.Visible = true
 	Sys('<font color="rgb(85, 170, 127)">Loaded!</font>', "["..cache.HubName.."] "  .. cache.ScriptName .. " by " .. cache.Creator .. ", press '" ..  cache.Hotkey .. "' to toggle UI.")
 	print("7Exec UI Library v".._G.Version)
+
+
+
 	return tabLibrary
 
 end
@@ -1706,6 +1828,7 @@ function UILibrary:Notification(Table)
 		frame:Destroy()
 	end)
 end
+
 
 function Warn(err)
 	UILibrary:Notification({
