@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "5E"
+_G.Version = "5F"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -374,7 +374,7 @@ function UILibrary:Window(Table)
 				BackgroundTransparency = 1, 
 				BorderSizePixel = 1, 
 				Position = UDim2.new(0, 0,0, 0), 
-				Size = UDim2.new(1, 0,0.1, 0),
+				Size = UDim2.new(1, 0,0.075, 0),
 				--AutomaticSize = "Y",
 				Visible = true, 
 
@@ -396,7 +396,7 @@ function UILibrary:Window(Table)
 				AnchorPoint = Vector2.new(0,0.5),
 				BorderSizePixel = 0, 
 				Position = UDim2.new(0, 0,0.75, 0), 
-				Size = UDim2.new(1, 0,0.415, 0),
+				Size = UDim2.new(1, 0,0.45, 0),
 				Font = "GothamMedium",
 				Text = Text,
 				TextScaled = true,
