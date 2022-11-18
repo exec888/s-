@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "5B"
+_G.Version = "5C"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -363,7 +363,7 @@ function UILibrary:Window(Table)
 
 		tabButton.MouseButton1Down:Connect(onToggle)
 		tabButtonframe.MouseButton1Down:Connect(onToggle)
-		--local sectionLibrary = {}
+		local sectionLibrary = {}
 
 		function sectionLibrary:AddSection(Text)-- fix sections
 			if Text == "false" then
@@ -405,7 +405,7 @@ function UILibrary:Window(Table)
 			end
 			
 			
-			--local buttonsLibrary = {}
+			local buttonsLibrary = {}
 
 			function buttonsLibrary:AddButton(Table)
 				local buttonFrame = lib.Create("Frame", tabScrollFrame, {
