@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "5A"
+_G.Version = "5B"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -366,7 +366,7 @@ function UILibrary:Window(Table)
 		--local sectionLibrary = {}
 
 		function sectionLibrary:AddSection(Text)-- fix sections
-			if not Text then
+			if Text == "false" then
 			else
 				local sectionFrame = lib.Create("Frame", tabScrollFrame, {
 				BackgroundColor3 = Color3.fromRGB(29, 29, 29), 
@@ -1681,39 +1681,39 @@ function UILibrary:Window(Table)
 		end
 
 		function sectionLibrary:AddButton(Table)
-			self:AddSection(false)
+			self:AddSection("false")
 			buttonsLibrary:AddButton(Table)
 		end
 		function sectionLibrary:AddTextBox(Table)
-			self:AddSection(false)
+			self:AddSection("false")
 			buttonsLibrary:AddTextBox(Table)
 		end
 		function sectionLibrary:AddToggle(Table)
-			self:AddSection(false)
+			self:AddSection("false")
 			buttonsLibrary:AddToggle(Table)
 		end
 		function sectionLibrary:AddParagraph(Table)
-			self:AddSection(false)
+			self:AddSection("false")
 			buttonsLibrary:AddParagraph(Table)
 		end
 		function sectionLibrary:AddSlider(Table)
-			self:AddSection(false)
+			self:AddSection("false")
 			buttonsLibrary:AddSlider(Table)
 		end
 		function sectionLibrary:AddDropDown(Table)
-			self:AddSection(false)
+			self:AddSection("false")
 			buttonsLibrary:AddDropDown(Table)
 		end
 		function sectionLibrary:AddBind(Table)
-			self:AddSection(false)
+			self:AddSection("false")
 			buttonsLibrary:AddBind(Table)
 		end
 		function sectionLibrary:AddLabel(Table)
-			self:AddSection(false)
+			self:AddSection("false")
 			buttonsLibrary:AddLabel(Table)
 		end
 		function sectionLibrary:AddColorPicker(Table)
-			self:AddSection(false)
+			self:AddSection("false")
 			buttonsLibrary:AddColorPicker(Table)
 		end
 		return sectionLibrary
