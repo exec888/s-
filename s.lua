@@ -396,7 +396,7 @@ function UILibrary:Window(Table)
 				AnchorPoint = Vector2.new(0,0.5),
 				BorderSizePixel = 0, 
 				Position = UDim2.new(0, 0,0.55, 0), 
-				Size = UDim2.new(1, 0,0.55, 0),
+				Size = UDim2.new(1, 0,0.6, 0),
 				Font = "GothamMedium",
 				Text = Text,
 				TextScaled = true,
