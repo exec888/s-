@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "5G"
+_G.Version = "6A"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -404,7 +404,7 @@ function UILibrary:Window(Table)
 				TextXAlignment = "Left",
 			})
 			local sectionlabel_padding = lib.Create("UIPadding", sectionlabel, {
-					PaddingTop = UDim.new(0, 5),
+					PaddingTop = UDim.new(0.05, 0),
 
 				})
 			end
