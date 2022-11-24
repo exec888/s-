@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "6D"
+_G.Version = "6E"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -891,16 +891,20 @@ function UILibrary:Window(Table)
 					TextColor3 = Color3.fromRGB(255, 255, 255),
 					ZIndex = 2,
 				})
-				local label_stroke = lib.Create("UIStroke", label, {
-					Color = Color3.fromRGB(155,155,155),
-					Thickness = 1,
-					Transparency = 0.5,
-				})
-				button.MouseEnter:Connect(function()
+				--local label_stroke = lib.Create("UIStroke", label, {
+				--	Color = Color3.fromRGB(155,155,155),
+				--	Thickness = 1,
+				--	Transparency = 0.5,
+				--})
+				buttonFrame.MouseEnter:Connect(function()
 					lib.Tween(Button_highlight, "BackgroundTransparency", 0.95, "InOut", "Linear", 0.1)
+					lib.Tween(label, "TextTransparency", 0)
+					--lib.Tween(label_stroke, "Transparency", 0.5)
 				end)
-				button.MouseLeave:Connect(function()
+				buttonFrame.MouseLeave:Connect(function()
 					lib.Tween(Button_highlight, "BackgroundTransparency", 1, "InOut", "Linear", 0.1)
+					lib.Tween(label, "TextTransparency", 1)
+					--lib.Tween(label_stroke, "Transparency", 1)
 				end)
 
 				local mouse = Players.LocalPlayer:GetMouse()
