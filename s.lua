@@ -1,5 +1,5 @@
 local UILibrary = {}
-_G.Version = "6C"
+_G.Version = "6D"
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Player788/luau1/main/lib.lua"))()
 local Players = game:GetService("Players")
@@ -363,53 +363,53 @@ function UILibrary:Window(Table)
 
 		tabButton.MouseButton1Down:Connect(onToggle)
 		tabButtonframe.MouseButton1Down:Connect(onToggle)
-		
+
 		sectionLibrary = {}
 
 		function sectionLibrary:AddSection(Text)-- fix sections
 			if Text == "false" then
 			else
 				local sectionFrame = lib.Create("Frame", tabScrollFrame, {
-				BackgroundColor3 = Color3.fromRGB(29, 29, 29), 
-				BackgroundTransparency = 1, 
-				BorderSizePixel = 1, 
-				Position = UDim2.new(0, 0,0, 0), 
-				Size = UDim2.new(1, 0,0.075, 0),
-				--AutomaticSize = "Y",
-				Visible = true, 
+					BackgroundColor3 = Color3.fromRGB(29, 29, 29), 
+					BackgroundTransparency = 1, 
+					BorderSizePixel = 1, 
+					Position = UDim2.new(0, 0,0, 0), 
+					Size = UDim2.new(1, 0,0.075, 0),
+					--AutomaticSize = "Y",
+					Visible = true, 
 
-			})
-			local listlayout_tabScrollFrame = lib.Create("UIListLayout", sectionFrame, {
-				Padding = UDim.new(0, 5),
-				SortOrder = "LayoutOrder",
-			})
-			local sectionLabelFrame = lib.Create("Frame", sectionFrame, {
-				BackgroundColor3 = Color3.fromRGB(44, 44, 44), 
-				AnchorPoint = Vector2.new(0,0),
-				BackgroundTransparency = 1, 
-				BorderSizePixel = 0, 
-				Position = UDim2.new(0, 0,0, 0), 
-				Size = UDim2.new(1, 0,1, 0), -- scale y 0.1 
-			})
-			local sectionlabel = lib.Create("TextLabel", sectionLabelFrame, {
-				BackgroundTransparency = 1, 
-				AnchorPoint = Vector2.new(0,0.5),
-				BorderSizePixel = 0, 
-				Position = UDim2.new(0, 0,0.55, 0), 
-				Size = UDim2.new(1, 0,0.6, 0),
-				Font = "GothamMedium",
-				Text = Text,
-				TextScaled = true,
-				TextColor3 = Color3.fromRGB(155, 155, 155),
-				TextXAlignment = "Left",
-			})
-			local sectionlabel_padding = lib.Create("UIPadding", sectionlabel, {
+				})
+				local listlayout_tabScrollFrame = lib.Create("UIListLayout", sectionFrame, {
+					Padding = UDim.new(0, 5),
+					SortOrder = "LayoutOrder",
+				})
+				local sectionLabelFrame = lib.Create("Frame", sectionFrame, {
+					BackgroundColor3 = Color3.fromRGB(44, 44, 44), 
+					AnchorPoint = Vector2.new(0,0),
+					BackgroundTransparency = 1, 
+					BorderSizePixel = 0, 
+					Position = UDim2.new(0, 0,0, 0), 
+					Size = UDim2.new(1, 0,1, 0), -- scale y 0.1 
+				})
+				local sectionlabel = lib.Create("TextLabel", sectionLabelFrame, {
+					BackgroundTransparency = 1, 
+					AnchorPoint = Vector2.new(0,0.5),
+					BorderSizePixel = 0, 
+					Position = UDim2.new(0, 0,0.55, 0), 
+					Size = UDim2.new(1, 0,0.6, 0),
+					Font = "GothamMedium",
+					Text = Text,
+					TextScaled = true,
+					TextColor3 = Color3.fromRGB(155, 155, 155),
+					TextXAlignment = "Left",
+				})
+				local sectionlabel_padding = lib.Create("UIPadding", sectionlabel, {
 					PaddingTop = UDim.new(0.025, 0),
 
 				})
 			end
-			
-			
+
+
 			buttonsLibrary = {}
 
 			function buttonsLibrary:AddButton(Table)
@@ -828,7 +828,7 @@ function UILibrary:Window(Table)
 					BackgroundTransparency = 0, 
 					BorderSizePixel = 0, 
 					Position = UDim2.new(0, 0,0, 0), 
-					Size = UDim2.new(1, 0,0.2, 0),
+					Size = UDim2.new(1, 0,0.125, 0),
 				})
 				local Button_highlight = lib.Create("Frame", buttonFrame, {
 					ZIndex = 2,
@@ -849,8 +849,8 @@ function UILibrary:Window(Table)
 					BackgroundColor3 = Color3.fromRGB(50, 50, 50), 
 					BackgroundTransparency = 1, 
 					BorderSizePixel = 0, 
-					Position = UDim2.new(0.025, 0,0.25, 0), 
-					Size = UDim2.new(0.975, 0,0.25, 0),
+					Position = UDim2.new(0.025, 0,0.5, 0), 
+					Size = UDim2.new(0.5, 0,0.455, 0),
 					Text = Table.Text,
 					Font = "GothamMedium",
 					TextScaled = true,
@@ -858,11 +858,12 @@ function UILibrary:Window(Table)
 					TextXAlignment = "Left",
 				})
 				local maxFrame = lib.Create("Frame", buttonFrame, {
-					BackgroundColor3 = Color3.fromRGB(255, 255, 255), 
+					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+					AnchorPoint = Vector2.new(0,0.5),
 					BackgroundTransparency = 0.95, 
 					BorderSizePixel = 0, 
-					Position = UDim2.new(0.025, 0,0.5, 0), 
-					Size = UDim2.new(0.95, 0,0.35, 0),
+					Position = UDim2.new(0.505, 0,0.5, 0), 
+					Size = UDim2.new(0.475, 0,0.5, 0),
 				})
 				local buttonFrame_corner = lib.Create("UICorner", maxFrame, {
 					CornerRadius = UDim.new(0, 5)
@@ -883,14 +884,18 @@ function UILibrary:Window(Table)
 					BackgroundTransparency = 1, 
 					BorderSizePixel = 0, 
 					Position = UDim2.new(0, 0,0.5, 0), 
-					Size = UDim2.new(1, 0,0.85, 0),
+					Size = UDim2.new(1, 0,0.75, 0),
 					Font = "GothamMedium",
 					Text = Table.Default or Table.Min,
 					TextScaled = true,
 					TextColor3 = Color3.fromRGB(255, 255, 255),
 					ZIndex = 2,
 				})
-
+				local label_stroke = lib.Create("UIStroke", label, {
+					Color = Color3.fromRGB(155,155,155),
+					Thickness = 1,
+					Transparency = 0.5,
+				})
 				button.MouseEnter:Connect(function()
 					lib.Tween(Button_highlight, "BackgroundTransparency", 0.95, "InOut", "Linear", 0.1)
 				end)
